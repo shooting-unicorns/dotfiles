@@ -1,0 +1,448 @@
+;:set syn=dosini
+[global/wm]
+margin-top = 101
+margin-bottom = 100
+
+
+[colors]
+
+fg = ${xrdb:color7}
+modfg = ${xrdb:color3}
+alt = ${xrdb:color2}
+alt2 = ${xrdb:color1}
+bg = ${xrdb:color0}
+
+
+white = #d1d1d1
+gray = #585858
+black = #ff121212
+red = #c795ae
+blue = #95aec7
+yellow = #c7ae95
+green = #aec795
+
+
+[bar/Bar]
+bottom = top
+wm-restack = i3
+
+monitor =
+
+fixed-center = true
+
+border-size = 10
+border-color = #00aaaaaa
+
+width = 100%
+height = 50
+
+override-redirect = false
+;offset-x = 5%
+;offset-y = 1%
+radius = 5
+
+enable-ipc = false
+
+padding-left = 6
+padding-right = 6
+
+module-margin-right = 0
+module-margin-left = 0
+
+;modules-right = updates date menu0
+;modules-center = mpd
+;modules-left = cpu memory filesystem
+
+modules-left = i3
+modules-center = date
+modules-right = wlan battery volume menu0
+
+separator = "      "
+
+;background = ${colors.bg}
+background = #0e1528
+foreground = ${colors.modfg}
+
+overline-size = 2
+overline-color = ${colors.white}
+underline-size = 4
+underline-color = ${colors.modfg}
+
+; font-0 = micro:weight=regular:size=15;3
+; font-1 = FontAwesome:size=15;3
+; font-2 = IPAPgothic:weight=regular:size=15;3
+; font-3 = FontAwesome 5 Free:size=15:style=Solid;3
+; font-4 = unifont:size=15;3
+
+font-0 = micro:weight=regular:size=12;3
+font-1 = FontAwesome:size=12;3
+font-2 = IPAPgothic:weight=regular:size=12;3
+font-3 = FontAwesome 5 Free:size=12:style=Solid;3
+font-4 = unifont:size=12;3
+
+[module/xwindow]
+type = internal/xwindow
+label = %title%
+label-maxlen = 30
+
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+
+
+;mount-0 = /
+mount-0 = /home
+mount-1 = /home/gui/HDD
+
+label-mounted =  %free%
+;label-mounted-underline = ${colors.modfg}
+label-mounted-padding = 1
+;label-mounted-background = ${colors.bg}
+
+label-unmounted =
+;label-unmounted-foreground = ${colors.bg}
+
+
+[module/i3]
+type = internal/i3
+format = <label-mode> <label-state>
+index-sort = true
+
+label-focused = %index%
+label-focused-padding = 1
+label-focused-foreground = ${colors.bg}
+label-focused-background = ${colors.modfg}
+
+label-unfocused = %index%
+label-unfocused-padding = 1
+;label-unfocused-background = ${colors.black}
+
+label-urgent = %index%
+label-urgent-background = ${colors.alt}
+label-urgent-padding = 1
+
+label-visible = %index%
+label-visible-padding = 1
+
+
+
+[module/mpd]
+type = internal/mpd
+
+host = gui
+port = 4200
+
+;format-online = <label-song> <icon-prev> <icon-play> <icon-pause> <icon-next>
+format-online = <label-song>
+format-offline = <label-offline>
+
+label-offline = mpd is offline
+;label-offline-foreground = ${colors.bg}
+
+label-song = "%artist% - %title%"
+label-song-maxlen = 120
+label-song-ellipsis = false
+;label-song-background = ${colors.black}
+;label-song-padding = 1
+
+
+;icon-prev = 
+;icon-seekb = <<
+;icon-stop = o
+;icon-pause = %{T4}
+;icon-play = %{T4}
+;icon-next = %{T4}
+;icon-seekf = >>
+
+icon-random = S
+icon-repeat = R
+
+toggle-on-foreground = #e60053
+toggle-off-foreground = #66
+
+
+[module/backlight]
+type = internal/xbacklight
+
+format = <label> <bar>
+label = BL
+
+bar-width = 10
+bar-indicator = │
+bar-indicator-foreground = #ff
+bar-indicator-font = 2
+bar-fill = ─
+bar-fill-font = 2
+bar-fill-foreground = #9f78e1
+bar-empty = ─
+bar-empty-font = 2
+bar-empty-foreground = #55
+
+
+[module/cpu]
+format-label = internal/cpu
+
+format = <label>
+
+ramp-coreload-0 = ▁
+ramp-coreload-1 = ▂
+ramp-coreload-2 = ▃
+ramp-coreload-3 = ▄
+ramp-coreload-4 = ▅
+ramp-coreload-5 = ▆
+ramp-coreload-6 = ▇
+ramp-coreload-7 = █
+ramp-coreload-underline = ${colors.fg}
+
+type = internal/cpu
+interval = 2
+label = " %percentage%%"
+
+;label-underline = ${colors.modfg}
+;label-background = ${colors.bg}
+;label-overline = ${colors.white}
+
+
+[module/memory]
+type = internal/memory
+interval = 2
+
+label = " %percentage_used%%"
+;label = RAM %percentage_used%%
+;label-underline = ${colors.modfg}
+;label-foreground = ${colors.modfg}
+;label-background = ${colors.bg}
+
+
+[module/wlan]
+type = internal/network
+interface = wlp2s0
+interval = 3.0
+
+format-connected-padding = 1
+format-disconnected-padding = 1
+
+format-connected = <ramp-signal> <label-connected>
+; format-connected-underline = ${colors.white}
+; format-disconnected-underline = ${colors.gray}
+;
+ramp-signal-0 = 😱
+ramp-signal-1 = 😠
+ramp-signal-2 = 😒
+ramp-signal-3 = 😊
+ramp-signal-4 = 😃
+ramp-signal-5 = 😈
+
+; label-connected = %essid%
+label-connected = %downspeed:9%
+label-disconnected = 
+label-disconnected-foreground = ${colors.gray}
+
+
+[module/eth]
+type = internal/network
+interface = wlp2s0
+interval = 3.0
+
+format-connected-padding = 1
+format-disconnected-padding = 1
+
+format-connected-underline = ${colors.white}
+format-disconnected-underline = ${colors.gray}
+
+label-connected = 
+label-disconnected = 
+label-disconnected-foreground = ${colors.gray}
+
+
+[module/date]
+type = internal/date
+date-alt = %A   %H:%M
+date = %b/%d/%y   %H:%M
+interval = 5
+
+;format-underline = ${colors.modfg}
+;format-background = ${colors.bg}
+;format-foreground = ${colors.fg}
+;format-padding = 2
+format-underline = ${colors.yellow}
+
+
+[module/volume]
+type = internal/volume
+
+format-volume = <bar-volume>
+
+label-volume = VOL
+label-volume-foreground = ${root.foreground}
+
+label-muted =  sound muted
+label-muted-foreground = ${colors.gray}
+
+bar-volume-width = 10
+bar-volume-foreground-0 = ${colors.green}
+bar-volume-foreground-1 = ${colors.green}
+bar-volume-foreground-2 = ${colors.green}
+bar-volume-foreground-3 = ${colors.green}
+bar-volume-foreground-4 = ${colors.yellow}
+bar-volume-foreground-5 = ${colors.red}
+bar-volume-gradient = false
+bar-volume-indicator = 
+bar-volume-indicator-font = 4
+bar-volume-indicator-foreground = ${colors.white}
+bar-volume-fill = 
+bar-volume-fill-font = 4
+bar-volume-empty = 
+bar-volume-empty-font = 4
+bar-volume-empty-foreground = ${colors.gray}
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+; Sink to be used, if it exists (find using `pacmd list-sinks`, name field)
+; If not, uses default sink
+sink = alsa_output.pci-0000_12_00.3.analog-stereo
+
+; Use PA_VOLUME_UI_MAX (~153%) if true, or PA_VOLUME_NORM (100%) if false
+; Default: true
+use-ui-max = true
+
+; Interval for volume increase/decrease (in percent points)
+; Default: 5
+interval = 5
+; Available tags:
+;   <label-volume> (default)
+;   <ramp-volume>
+;   <bar-volume>
+format-volume = <ramp-volume> <label-volume>
+
+; Available tags:
+;   <label-muted> (default)
+;   <ramp-volume>
+;   <bar-volume>
+;format-muted = <label-muted>
+
+; Available tokens:
+;   %percentage% (default)
+;label-volume = %percentage%%
+
+; Available tokens:
+;   %percentage% (default)
+label-muted = 🔇 muted
+label-muted-foreground = #666
+
+; Only applies if <ramp-volume> is used
+ramp-volume-0 = 🔈
+ramp-volume-1 = 🔉
+ramp-volume-2 = 🔊
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = AC
+full-at = 99
+
+format-charging = <animation-charging> <label-charging>
+format-charging-underline = ${colors.green}
+format-charging-padding = 1
+
+format-discharging = <ramp-capacity> <label-discharging>
+; format-discharging-underline = ${colors.yellow}
+format-discharging-padding = 1
+
+format-full =   <label-full>
+format-full-underline = ${self.format-charging-underline}
+format-full-overline = ${self.format-charging-underline}
+format-full-padding = 1
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-foreground = ${colors.yellow}
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-foreground = ${colors.yellow}
+animation-charging-framerate = 500
+
+
+[module/temperature]
+type = internal/temperature
+; thermal-zone = 0
+warn-temperature = 65
+
+format = <label>
+format-warn = <label-warn>
+
+label = TEMP %temperature%
+label-warn = TEMP %temperature%!!!
+
+
+[module/menu0]
+type = custom/menu
+
+format = <label-toggle> <menu>
+;format-underline = ${colors.white}
+format-padding = 1
+format-margin = 1
+
+;format-background = ${colors.black}
+
+menu-0-0 = " shutdown "
+menu-0-0-exec = shutdown now
+menu-0-1 = " restart "
+menu-0-1-exec = shutdown -r now
+menu-0-2 =   cancel
+
+
+label-open = 
+label-close =
+
+[module/updates]
+type = custom/script
+
+;label-background = ${colors.bg}
+;label-padding = 0
+;label-underline = ${colors.modfg}
+
+exec = checkupdates | wc -l
+;tail = true
+interval = 60
+
+label  = " %output%"
+
+
+[module/cputemp]
+type = custom/script
+
+;label-background = ${colors.bg}
+;label-padding = 0
+;label-underline = ${colors.modfg}
+
+exec = sensors | grep --max-count=1 "CPU Temperature:" | awk '{print substr($0,22,2)}'
+;tail = true
+interval = 10
+
+label = " %output%°C"
+
+
+[module/gputemp]
+type = custom/script
+
+;label-background = ${colors.bg}
+;label-padding = 0
+;label-underline = ${colors.modfg}
+
+exec = nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits
+;tail = true
+interval = 10
+
+label = "GPU %output%°C"
+
+
+; vim:ft=dosini
+
